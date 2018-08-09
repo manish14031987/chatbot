@@ -1,0 +1,360 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Access-Control-Allow-Origin" content="*">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+		<title>
+			Velkommen til chatbot
+		</title>
+        <style class="cp-pen-styles">@import url(https://fonts.googleapis.com/css?family=Lato:400,700);
+            *, *:before, *:after {
+            box-sizing: border-box;
+            }
+            body {
+            background: #C5DDEB;
+            font: 14px/20px "Lato", Arial, sans-serif;
+            padding: 40px 0;
+            color: white;
+            }
+            .container {
+            margin: 0 auto;
+            width: 750px;
+            background: #444753;
+            border-radius: 5px;
+            }
+            .chat {
+            width: 100%;
+            float: left;
+            background: #F2F5F8;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            color: #434651;
+            }
+            .chat .chat-header {
+            padding: 20px;
+            border-bottom: 2px solid white;
+            }
+            .chat .chat-header img {
+            float: left;
+            }
+            .chat .chat-header .chat-about {
+            float: left;
+            padding-left: 10px;
+            margin-top: 6px;
+            }
+            .chat .chat-header .chat-with {
+            font-weight: bold;
+            font-size: 16px;
+            }
+            .chat .chat-header .chat-num-messages {
+            color: #92959E;
+            }
+            .chat .chat-header .fa-star {
+            float: right;
+            color: #D8DADF;
+            font-size: 20px;
+            margin-top: 12px;
+            }
+            .chat .chat-history {
+            padding: 30px 30px 20px;
+            border-bottom: 2px solid white;
+            overflow-y: scroll;
+            height: 60%;
+            }
+            .chat .chat-history .message-data {
+            margin-bottom: 15px;
+            }
+            .chat .chat-history .message-data-time {
+            color: #a8aab1;
+            padding-left: 6px;
+            }
+            .chat .chat-history .message {
+            color: white;
+            padding: 18px 20px;
+            line-height: 26px;
+            font-size: 16px;
+            border-radius: 7px;
+            margin-bottom: 30px;
+            width: 90%;
+            position: relative;
+            }
+            .chat .chat-history .message:after {
+            bottom: 100%;
+            left: 7%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            border-bottom-color: #86BB71;
+            border-width: 10px;
+            margin-left: -10px;
+            }
+            .chat .chat-history .my-message {
+            background: #86BB71;
+            }
+            .chat .chat-history .other-message {
+            background: #94C2ED;
+            }
+            .chat .chat-history .other-message:after {
+            border-bottom-color: #94C2ED;
+            left: 93%;
+            }
+            .chat .chat-message {
+            padding: 30px;
+            }
+            .chat .chat-message textarea {
+            width: 100%;
+            border: none;
+            padding: 10px 20px;
+            font: 14px/22px "Lato", Arial, sans-serif;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            resize: none;
+            }
+            .chat .chat-message .fa-file-o, .chat .chat-message .fa-file-image-o {
+            font-size: 16px;
+            color: gray;
+            cursor: pointer;
+            }
+            .chat .chat-message button {
+            float: right;
+            color: #94C2ED;
+            font-size: 16px;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            background: #F2F5F8;
+            } 
+            .chat .chat-message button:hover {
+            color: #75b1e8;
+            }
+            .online, .offline, .me {
+            margin-right: 3px;
+            font-size: 10px;
+            }
+            .online {
+            color: #86BB71;
+            }
+            .offline {
+            color: #E38968;
+            }
+            .me {
+            color: #94C2ED;
+            }
+            .align-left {
+            text-align: left;
+            }
+            .align-right {
+            text-align: right;
+            }
+            .float-right {
+            float: right;
+            }
+            .clearfix:after {
+            visibility: hidden;
+            display: block;
+            font-size: 0;
+            content: " ";
+            clear: both;
+            height: 0;
+            }
+            .bot-image{
+            height:55px;
+            width:55px;
+            }
+            .message.my-message ul li {
+            background:  #fff;
+            color:  black;
+            margin: 8px 12px;
+            padding: 4px 15px;
+            border-radius:  10px;
+            text-align:  center;
+            display: inline-block;
+            cursor: pointer;
+            }
+			img.response-image {
+			width: 100%;
+			}
+        </style>
+    </head>
+    <body>
+        <div class="container clearfix">
+            <div class="chat">
+                <div class="chat-header clearfix">
+                    <img src="https://www.rebotify.com/style/img/bot.png" class="bot-image" alt="avatar">
+                    <div class="chat-about">
+                        <div class="chat-with">Chat med bot</div>
+                        <div class="chat-num-messages"></div>
+                    </div>
+                    <i class="fa fa-star"></i>
+                </div>
+                <!-- end chat-header -->
+                <div class="chat-history">
+                    <ul class="all">
+                        <li>
+                            <div class="message-data">
+                                <span class="message-data-name"><i class="fa fa-circle online"></i> Bot</span>
+                                <span class="message-data-time"><span id="current-time"></span>, I dag</span>
+                            </div>
+                            <div class="message my-message">
+                                Hei der venner! Jeg er chatbot. Spør meg om at jeg skal prøve å svare.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- end chat-history -->
+                <div class="chat-message clearfix">
+                    <textarea name="message-to-send" id="message-to-send" placeholder="Skriv inn meldingen din" rows="3"></textarea>
+                    <i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
+                    <i class="fa fa-file-image-o"></i>
+                    <button>Sende</button>
+                </div>
+                <!-- end chat-message -->
+            </div>
+            <!-- end chat -->
+        </div>
+        <!-- end container -->
+        <script id="message-template" type="text/x-handlebars-template">
+            <li class="clearfix">
+            <div class="message-data align-right">
+             <span class="message-data-time" >{{time}}, I dag</span> &nbsp; &nbsp;
+             <span class="message-data-name" >Du</span> <i class="fa fa-circle me"></i>
+            </div>
+            <div class="message other-message float-right">
+             {{messageOutput}}
+            </div>
+            </li>
+        </script>
+        <script id="message-response-template" type="text/x-handlebars-template">
+            <li>
+            <div class="message-data">
+             <span class="message-data-name"><i class="fa fa-circle online"></i> Bot</span>
+             <span class="message-data-time">{{time}}, I dag</span>
+            </div>
+            <div class="message my-message">
+             {{response}}
+            </div>
+            </li>
+        </script>
+        <script src="//static.codepen.io/assets/common/stopExecutionOnTimeout-41c52890748cd7143004e05d3c5f786c66b19939c4500ce446314d1748483e13.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.0/handlebars.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
+        <script>(function () {
+            $(window).load(function(){
+            	var currentdate = new Date(); 
+            	var datetime =     new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+            	$('#current-time').html(datetime);
+            });
+			var chat = {
+				messageToSend: '',
+				init: function () {
+					this.cacheDOM();
+					this.bindEvents();
+					this.render();
+				},
+				cacheDOM: function () {
+					this.$chatHistory = $('.chat-history');
+					this.$button = $('button');
+					this.$textarea = $('#message-to-send');
+					this.$chatHistoryList = this.$chatHistory.find('ul.all');
+				},
+				bindEvents: function () {
+					this.$button.on('click', this.addMessage.bind(this));
+					this.$textarea.on('keyup', this.addMessageEnter.bind(this));
+				},
+				render: function () {
+					this.scrollToBottom();
+					if (this.messageToSend.trim() !== '') {
+						var template = Handlebars.compile($("#message-template").html());
+						var context = {
+							messageOutput: this.messageToSend,
+							time: this.getCurrentTime() 
+						};
+
+
+						this.$chatHistoryList.append(template(context));
+						this.scrollToBottom();
+						this.$textarea.val('');
+
+						// responses
+						var contextResponse = {};
+						var templateResponse = Handlebars.compile($("#message-response-template").html());
+						var responseMessage = 
+						$.ajax({
+							type: 'GET',
+							url: 'http://18.191.166.225:8080/send',
+							data: { msg: this.messageToSend },
+							success: function(resultData) {
+								contextResponse = {
+									response: resultData,
+									time: new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+								};
+							}
+						});
+						setTimeout(function () {
+							new_li = '<li><div class="message-data"><span class="message-data-name"><i class="fa fa-circle online"></i> Bot</span><span class="message-data-time">'+contextResponse.time+' I dag</span></div><div class="message my-message">'+contextResponse.response+'</div></li>';
+							this.$chatHistoryList.append(new_li);
+							this.scrollToBottom();
+							}.bind(this), 1500);
+
+					}
+
+				},
+
+				addMessage: function () {
+				this.messageToSend = this.$textarea.val();
+				this.render();
+				},
+				addMessageEnter: function (event) {
+				// enter was pressed
+				if (event.keyCode === 13) {
+				this.addMessage();
+				}
+				},
+				scrollToBottom: function () {
+				this.$chatHistory.scrollTop(this.$chatHistory[0].scrollHeight);
+				},
+				getCurrentTime: function () {
+				return new Date().toLocaleTimeString().
+				replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3");
+				},
+				getRandomItem: function (arr) {
+				return arr[Math.floor(Math.random() * arr.length)];
+				} 
+			}
+			
+			chat.init();
+
+			})();
+			
+		function select_file(e){
+			get_file(e.type);
+		}
+		 
+		function get_file(file){
+	
+			var template = Handlebars.compile($("#message-template").html());
+			var context = {
+			  messageOutput: file,
+			  time: new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+			};
+			$('.chat-history').find('ul.all').append(template(context));
+			$('.chat-history').animate({scrollTop: $('.chat-history')[0].scrollHeight}, 500);		
+			$.ajax({
+				type: 'GET',
+				url: 'http://18.191.166.225:8080/getfile',
+				data: { type: file },
+				success: function(resultData) {
+					new_response_li = '<li><div class="message-data"><span class="message-data-name"><i class="fa fa-circle online"></i> Bot</span><span class="message-data-time">'+new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })+' I dag</span></div><div class="message my-message">'+resultData+'</div></li>';
+					$('.chat-history').find('ul.all').append(new_response_li);
+					$('.chat-history').animate({scrollTop: $('.chat-history')[0].scrollHeight}, 500);		
+
+				}
+			});
+		}
+                 
+        </script>
+    </body>
+</html>

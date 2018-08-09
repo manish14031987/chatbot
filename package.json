@@ -1,0 +1,14 @@
+{
+  "name": "Chatbot",
+  "version": "0.0.1",
+  "description": "My Chatbot",
+  "dependencies": {
+    "express": "^4.15.2",
+    "fs": "0.0.1-security",
+    "node-wit": "^5.0.0",
+    "url": "^0.11.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
